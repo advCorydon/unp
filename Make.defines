@@ -1,0 +1,10 @@
+CC=g++
+
+INCS=-I.
+
+RANLIB = ranlib
+
+CLEANFILES = core core.* *.core *.o temp.* *.out 
+
+.cc.o:
+	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
