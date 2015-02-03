@@ -6,7 +6,7 @@ using namespace std;
 int main(int argc, char* argv[]){
 	cout<<"Hello World"<<endl;
 	
-	Error::errRet("say error");
+	Error::terminate("say error %s <IPaddress>", argv[0]);
 	
 	return 0;
 }

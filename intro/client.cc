@@ -3,23 +3,22 @@
 #include <arpa/inet.h>
 #include <cstring>
 #include <unistd.h>
+#include "Error.H"
+#include "Constants.H"
 
 
 using namespace std;
 
 typedef struct sockaddr SA;
-const int MAX_LINE = 4096;
 
 int main(int argc, char* argv[]){
 	if(argc != 2){
-		cout<<"usage: "<<argv[0]<<" IPaddress"<<endl;
-		exit(1);
+		Error::terminate("usage: %s <IPaddress> ", argv[0]);
 	}
 	
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if(sockfd < 0){
-		cout<<"socket error"<<endl;
-		exit(1);
+		Error::sysTerminate("socket error");
 	}
 	
 	struct sockaddr_in serverAddr;
@@ -27,24 +26,25 @@ int main(int argc, char* argv[]){
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(13);
 	if(inet_pton(AF_INET, argv[1], &serverAddr.sin_addr) <= 0){
-		cout<<"inet_pton error for "<<argv[1]<<endl;
-		exit(1);
+		Error::terminate("inet_pton error for %s ", argv[1]);
 	}
 	
 	if(connect(sockfd, (SA*)&serverAddr, sizeof(serverAddr)) < 0){
-		cout<<"connect error"<<endl;
+		Error::sysTerminate("connect error");
 	}
 	
 	int n = 0;
-	char recvLine[MAX_LINE + 1];
-	while( (n = read(sockfd, recvLine, MAX_LINE)) > 0){
+	int count = 0;
+	char recvLine[Constants::MAX_LINE + 1];	
+	while( (n = read(sockfd, recvLine, Constants::MAX_LINE)) > 0){
 		recvLine[n] = '\0';
+		count++;
 		cout<<recvLine;
 	}
-	cout<<endl;
+	cout<<"counter = "<< count <<endl;
 	
 	if(n < 0){
-		cout<<"read error"<<endl;
+		Error::sysTerminate("Read error");
 	}
 	
 	exit(0);

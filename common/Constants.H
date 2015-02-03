@@ -3,6 +3,7 @@
 
 namespace Constants{
 	static const int MAX_LINE = 4096;
+	static const int LISTENQ = 1024;
 };
 
 #endif

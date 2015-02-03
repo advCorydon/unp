@@ -6,11 +6,11 @@
 
 class Error{
 public:
-	static void errRet(const char* fmt, ...);
-	static void errSys(const char* fmt, ...);
-	static void errDump(const char* fmt, ...);
-	static void errMsg(const char* fmt, ...);
-	static void errQuit(const char* fmt, ...);
+	static void sysInfo(const char* fmt, ...);
+	static void sysTerminate(const char* fmt, ...);
+	static void sysDump(const char* fmt, ...);
+	static void info(const char* fmt, ...);
+	static void terminate(const char* fmt, ...);
 private:
 	static void errDoit(int, int, const char*, va_list);
 };

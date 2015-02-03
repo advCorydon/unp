@@ -4,6 +4,9 @@ INCS=-I${ROOT_DIR}/common -I.
 
 LIBS=-L${ROOT_DIR}/lib/ -lunp
 
+#CFLAGS=-std=c++11 -g -Wall -pthread -std=gnu++11
+CFLAGS=-std=c++11 -g
+
 OBJECTS=$(SOURCES:.cc=.o)
 
 RANLIB = ranlib
