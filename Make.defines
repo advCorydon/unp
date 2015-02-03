@@ -1,6 +1,10 @@
 CC=g++
 
-INCS=-I.
+INCS=-I${ROOT_DIR}/common -I.
+
+LIBS=-L${ROOT_DIR}/lib/ -lunp
+
+OBJECTS=$(SOURCES:.cc=.o)
 
 RANLIB = ranlib
 

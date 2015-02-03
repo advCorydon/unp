@@ -4,7 +4,7 @@ SRCS=Error.cc
 
 OBJS=$(SRCS:.cc=.o)
 
-LIBUNP_NAME = ../libunp.a
+LIBUNP_NAME = ../lib/libunp.a
 
 all:    ${OBJS}
 	ar rv ${LIBUNP_NAME} $?
