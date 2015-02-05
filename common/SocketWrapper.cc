@@ -32,5 +32,14 @@ void SocketWrapper::connect(int sockfd, const struct sockaddr *addr, socklen_t l
 		Error::sysTerminate("connect error");
 	}
 }
+
+
+int SocketWrapper::select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout){
+	int n;
+	
+	if ( (n = ::select(nfds, readfds, writefds, exceptfds, timeout)) < 0)
+	        Error::sysTerminate("select error");
+	return n;              /* can return 0 on timeout */
+}
 	
 		
