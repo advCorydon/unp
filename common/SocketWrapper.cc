@@ -3,6 +3,7 @@
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <errno.h>
 
 
 int SocketWrapper::socket(int family, int type, int protocol){
@@ -40,6 +41,34 @@ int SocketWrapper::select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *e
 	if ( (n = ::select(nfds, readfds, writefds, exceptfds, timeout)) < 0)
 	        Error::sysTerminate("select error");
 	return n;              /* can return 0 on timeout */
+}
+
+void SocketWrapper::shutdown(int fd, int how){
+	if(::shutdown(fd, how) < 0){
+		Error::sysTerminate("shutdown error");
+	}
+	
+	return;
+}
+
+
+int SocketWrapper::accept(int fd, struct sockaddr *sa, socklen_t *salenptr)
+{
+	int n = 0;
+	while(1){
+		n = ::accept(fd, sa, salenptr);
+		if(n < 0){
+			if(errno == EPROTO || errno == ECONNABORTED){
+				continue;
+			}
+			else{
+				Error::sysTerminate("accept error");
+			}
+		}
+		break;
+	}
+	
+	return n;
 }
 	
 		

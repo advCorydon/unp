@@ -1,6 +1,6 @@
 include ../Make.defines
 
-SRCS=Error.cc Utility.cc SocketWrapper.cc StdioWrapper.cc ReadLine.cc
+SRCS=Error.cc Utility.cc SocketWrapper.cc StdioWrapper.cc ReadLine.cc UnixWrapper.cc
 
 OBJS=$(SRCS:.cc=.o)
 
