@@ -70,5 +70,20 @@ int SocketWrapper::accept(int fd, struct sockaddr *sa, socklen_t *salenptr)
 	
 	return n;
 }
+
+
+const char* SocketWrapper::inet_ntop(int family, const void *addrptr, char *strptr, size_t len)
+{
+	const char *ptr;
+	
+	if (strptr == NULL){             /* check for old code */
+		Error::terminate("NULL 3rd argument to inet_ntop");
+	}
+	if ( (ptr = ::inet_ntop(family, addrptr, strptr, len)) == NULL){
+		Error::sysTerminate("inet_ntop error");             /* sets errno */
+	}
+	
+	return ptr;
+}
 	
 		
